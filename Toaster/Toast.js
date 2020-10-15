@@ -23,6 +23,7 @@ export default class Toast {
     assign(this.el.style, {
       [sides[0]]: 'calc(var(--offset) + var(--shift))',
       [sides[1]]: leftOffset, ...transform,
+      zIndex: zIndex++
     })
 
     const closer = closeBtn.cloneNode(true)
@@ -41,6 +42,9 @@ export default class Toast {
 
   updateClosePos() {}
 }
+
+
+let zIndex = 1
 
 
 const {assign} = Object

@@ -30,6 +30,8 @@ export default class Toaster {
 
     toast.render()
     this.updateShifts()
+
+    this.el.style.zIndex = zIndex++
   }
 
   clear(fast) {
@@ -55,6 +57,7 @@ export default class Toaster {
         '-100vh' : from=='bottom'? side.includes('bottom') && push? '150%' :
           '100vh' : '0'
     this.el.style = `
+      zIndex: ${zIndex++};
       --width: ${this.width}%;
       --translate: translate(${translateX}, ${translateY});
     `
@@ -84,6 +87,9 @@ export default class Toaster {
       toast.el.style.setProperty('--shift', toast.shift+'px'))
   }
 }
+
+
+let zIndex = 999
 
 
 function validate(side) {
