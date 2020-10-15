@@ -19,6 +19,7 @@ style.innerHTML = /* css */ `
     padding: 7px 18px;
     transition: .4s;
     max-width: var(--width);
+    animation: fly-in .4s ease-out forwards;
     --offset: 5px;
   }
 
@@ -38,6 +39,10 @@ style.innerHTML = /* css */ `
 
   .toast-close:hover, .toast-close:focus {
     color: red;
+  }
+
+  @keyframes fly-in {
+    from { transform: var(--translate) }
   }
 `
 

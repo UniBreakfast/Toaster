@@ -47,8 +47,17 @@ export default class Toaster {
   render() {
     this.el = document.createElement('div')
     assign(this.el, {className: 'Toaster-glass'})
-    this.el.style.setProperty('--width', this.width+'%')
 
+    const {side, from, push} = this
+    const translateX = from=='left'? side.includes('left')? '-150%' : '-100vw'
+                : from=='right'? side.includes('right')? '150%' : '100vw' : '0'
+    const translateY = from=='top'? side.includes('top') && push? '-150%' :
+        '-100vh' : from=='bottom'? side.includes('bottom') && push? '150%' :
+          '100vh' : '0'
+    this.el.style = `
+      --width: ${this.width}%;
+      --translate: translate(${translateX}, ${translateY});
+    `
     document.body.append(this.el)
   }
 

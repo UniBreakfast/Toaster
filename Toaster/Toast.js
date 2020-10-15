@@ -12,12 +12,17 @@ export default class Toast {
     })
 
     const sides = this.toaster.side.split('-')
+    let leftOffset = 'var(--offset)'
+    let transform = {}
+    if (sides[1] == 'center') {
+      sides[1] = 'left'
+      leftOffset = '50%'
+      transform = {transform: 'translateX(-50%)'}
+    }
 
     assign(this.el.style, {
-      [sides[0]]: 'var(--offset)',
-      [sides[1]]: 'var(--offset)',
-      transform: `translateY(calc(${
-        sides.includes('top') ? '' : '-'}1 * var(--shift)))`
+      [sides[0]]: 'calc(var(--offset) + var(--shift))',
+      [sides[1]]: leftOffset, ...transform,
     })
 
     this.el.append(closeBtn.cloneNode(true))
