@@ -18,6 +18,7 @@ style.innerHTML = /* css */ `
     position: absolute;
     padding: 7px 18px;
     transition: .4s;
+    max-width: var(--width);
     --offset: 5px;
   }
 

@@ -15,6 +15,9 @@ export default class Toaster {
     assign(this, {side, from, to, life, limit, width, gap, push}, {toasts: []})
 
     this.render()
+
+    this.updateOnResize = this.updateShifts.bind(this)
+    addEventListener('resize', this.updateOnResize)
   }
 
   log(msg, additionalClass, life) {
@@ -44,6 +47,7 @@ export default class Toaster {
   render() {
     this.el = document.createElement('div')
     assign(this.el, {className: 'Toaster-glass'})
+    this.el.style.setProperty('--width', this.width+'%')
 
     document.body.append(this.el)
   }
