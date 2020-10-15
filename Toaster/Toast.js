@@ -25,12 +25,18 @@ export default class Toast {
       [sides[1]]: leftOffset, ...transform,
     })
 
-    this.el.append(closeBtn.cloneNode(true))
+    const closer = closeBtn.cloneNode(true)
+    closer.onclick = () => this.remove()
+    this.el.append(closer)
 
     this.toaster.el.append(this.el)
   }
 
   remove() {
+    this.el.remove()
+    const {toasts} = this.toaster
+    toasts.splice(toasts.indexOf(this), 1)
+    this.toaster.updateShifts()
   }
 
   updateClosePos() {}
