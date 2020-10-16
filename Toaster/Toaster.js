@@ -53,17 +53,24 @@ export default class Toaster {
     this.el = document.createElement('div')
     assign(this.el, {className: 'Toaster-glass', toaster: this})
 
-    const {side, from, push} = this
-    const translateX = from=='left'? side.includes('left')? '-150%' : '-100vw' :
+    const {side, from, to, push} = this
+
+    const fromX = from=='left'? side.includes('left')? '-150%' : '-100vw' :
                   from=='right'? side.includes('right')? '150%' : '100vw' :
                     side.includes('center')? '-50%' : '0'
-    const translateY = from=='top'? side.includes('top') && push? '-150%' :
-        '-100vh' : from=='bottom'? side.includes('bottom') && push? '150%' :
-          '100vh' : '0'
+    const fromY = from=='top'? side.includes('top') && push? '-150%' : '-100vh'
+       : from=='bottom'? side.includes('bottom') && push? '150%' : '100vh' : '0'
+
+    const toX = to=='left'? side.includes('left')? '-150%' : '-100vw' :
+                  to=='right'? side.includes('right')? '150%' : '100vw' :
+                    side.includes('center')? '-50%' : '0'
+    const toY = to=='top'? '-100vh' : to=='bottom'? '100vh' : '0'
+
     this.el.style = `
       zIndex: ${zIndex++};
       --width: ${this.width}%;
-      --translate: translate(${translateX}, ${translateY});
+      --translate-in: translate(${fromX}, ${fromY});
+      --translate-out: translate(${toX}, ${toY});
     `
     document.body.append(this.el)
   }

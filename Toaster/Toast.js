@@ -38,7 +38,8 @@ export default class Toast {
 
   remove() {
     clearTimeout(this.timer)
-    this.el.remove()
+    this.el.classList.add('fleeing')
+    this.el.onanimationend = () => this.el.remove()
     const {toasts} = this.toaster
     toasts.splice(toasts.indexOf(this), 1)
     this.toaster.updateShifts()

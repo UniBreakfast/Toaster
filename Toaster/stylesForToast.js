@@ -17,10 +17,14 @@ style.innerHTML = /* css */ `
     background: #ddd;
     position: absolute;
     padding: 7px 18px;
-    transition: .4s;
+    transition: .5s;
     max-width: var(--width);
-    animation: fly-in .4s ease-out forwards;
+    animation: fly-in .5s ease-out;
     --offset: 5px;
+  }
+
+  .fleeing {
+    animation: fly-out .8s ease-in;
   }
 
   .toast-close {
@@ -42,7 +46,11 @@ style.innerHTML = /* css */ `
   }
 
   @keyframes fly-in {
-    from { transform: var(--translate) }
+    from { transform: var(--translate-in) }
+  }
+
+  @keyframes fly-out {
+    to { transform: var(--translate-out) }
   }
 `
 
