@@ -21,6 +21,9 @@ export default class Toaster {
   }
 
   log(msg, additionalClass, life) {
+    while (this.toasts.filter(toast => !toast.placed).length >= this.limit)
+      this.toasts[0].remove()
+
     if (life === undefined) life = this.life
 
     const toast = new Toast(msg, additionalClass, life)
