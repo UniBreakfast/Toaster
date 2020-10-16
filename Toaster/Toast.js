@@ -28,7 +28,7 @@ export default class Toast {
     })
 
     const closer = closeBtn.cloneNode(true)
-    closer.onclick = () => this.remove()
+    closer.onclick = e => e.shiftKey ? this.toaster.clear() : this.remove()
     this.el.append(closer)
 
     this.toaster.el.append(this.el)
