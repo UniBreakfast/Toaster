@@ -9,6 +9,7 @@ export default class Toast {
     assign(this.el, {
       innerHTML: this.msg,
       className: `Toaster-toast ${this.additionalClass}`,
+      toast: this,
     })
 
     const sides = this.toaster.side.split('-')

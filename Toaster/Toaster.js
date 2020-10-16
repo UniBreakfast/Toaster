@@ -48,7 +48,7 @@ export default class Toaster {
 
   render() {
     this.el = document.createElement('div')
-    assign(this.el, {className: 'Toaster-glass'})
+    assign(this.el, {className: 'Toaster-glass', toaster: this})
 
     const {side, from, push} = this
     const translateX = from=='left'? side.includes('left')? '-150%' : '-100vw'
