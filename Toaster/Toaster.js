@@ -51,8 +51,9 @@ export default class Toaster {
     assign(this.el, {className: 'Toaster-glass', toaster: this})
 
     const {side, from, push} = this
-    const translateX = from=='left'? side.includes('left')? '-150%' : '-100vw'
-                : from=='right'? side.includes('right')? '150%' : '100vw' : '0'
+    const translateX = from=='left'? side.includes('left')? '-150%' : '-100vw' :
+                  from=='right'? side.includes('right')? '150%' : '100vw' :
+                    side.includes('center')? '-50%' : '0'
     const translateY = from=='top'? side.includes('top') && push? '-150%' :
         '-100vh' : from=='bottom'? side.includes('bottom') && push? '150%' :
           '100vh' : '0'
