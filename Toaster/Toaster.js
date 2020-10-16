@@ -71,6 +71,8 @@ export default class Toaster {
   updateShifts() {
     const toasts = this.toasts.filter(toast => !toast.placed)
 
+    if (!toasts.length) return
+
     if (this.push) {
       toasts[toasts.length-1].shift = 0
 

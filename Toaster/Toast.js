@@ -32,9 +32,12 @@ export default class Toast {
     this.el.append(closer)
 
     this.toaster.el.append(this.el)
+
+    this.timer = setTimeout(() => this.remove(), this.life*1000)
   }
 
   remove() {
+    clearTimeout(this.timer)
     this.el.remove()
     const {toasts} = this.toaster
     toasts.splice(toasts.indexOf(this), 1)
