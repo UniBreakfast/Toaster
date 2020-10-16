@@ -1,16 +1,17 @@
 export default class Toast {
-  constructor (msg='', additionalClass='', life=null) {
-    assign(this, {msg, additionalClass, life})
+  constructor (msgContent='', additionalClass='', life=null) {
+    assign(this, {msgContent, additionalClass, life})
   }
 
   render() {
     this.el = document.createElement('div')
 
     assign(this.el, {
-      innerHTML: this.msg,
+      ...typeof this.msgContent=='string'? {innerHTML: this.msgContent} : {},
       className: `Toaster-toast ${this.additionalClass}`,
       toast: this,
     })
+    if (typeof this.msgContent != 'string') this.el.append(this.msgContent)
 
     const sides = this.toaster.side.split('-')
     let leftOffset = 'var(--offset)'

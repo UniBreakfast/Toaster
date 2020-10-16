@@ -20,13 +20,13 @@ export default class Toaster {
     addEventListener('resize', this.updateOnResize)
   }
 
-  log(msg, additionalClass, life) {
+  log(msgContent, additionalClass, life) {
     while (this.toasts.filter(toast => !toast.placed).length >= this.limit)
       this.toasts[0].remove()
 
     if (life === undefined) life = this.life
 
-    const toast = new Toast(msg, additionalClass, life)
+    const toast = new Toast(msgContent, additionalClass, life)
 
     this.toasts.push(toast)
     toast.toaster = this
