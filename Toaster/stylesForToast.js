@@ -44,6 +44,10 @@ style.innerHTML = /* css */ `
     line-height: 0;
     overflow: hidden;
     --offset: 3px;
+    top: var(--offset);
+    left: var(--offset);
+    right: var(--offset);
+    bottom: var(--offset);
   }
 
   .toast-close:hover, .toast-close:focus {

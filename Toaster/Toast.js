@@ -36,7 +36,7 @@ export default class Toast {
   }
 
   prepareEventHandlers() {
-    const closer = closeBtn.cloneNode(true)
+    const closer = this.closer = closeBtn.cloneNode(true)
     closer.onclick = e => e.shiftKey ? this.toaster.clear() : this.remove()
     this.el.append(closer)
 
@@ -71,7 +71,7 @@ export default class Toast {
       glass.removeEventListener('mousemove', handleMove)
       glass.removeEventListener('mouseup', handleStop)
       this.el.style.transition = null
-
+      this.updateClosePos()
     }
 
     this.el.onmousedown = e => {
@@ -94,14 +94,21 @@ export default class Toast {
     clearTimeout(this.timer)
     this.el.classList.add('fleeing')
     this.el.onanimationend = () => this.el.remove()
+
     const {toasts} = this.toaster
     toasts.splice(toasts.indexOf(this), 1)
     this.toaster.updateShifts()
   }
 
+  updateClosePos() {
+    const {closer, closer: {style}} = this
+    const {left, right, top, bottom} = closer.getBoundingClientRect()
 
-
-  updateClosePos() {}
+    if (left < 0) assign(style, {left: 'unset', right: null})
+    if (right > innerWidth) assign(style, {left: null, right: 'unset'})
+    if (top < 0) assign(style, {top: 'unset', bottom: null})
+    if (bottom > innerHeight) assign(style, {top: null, bottom: 'unset'})
+  }
 }
 
 
@@ -113,4 +120,4 @@ const {assign} = Object
 
 const closeBtn = document.createElement('button')
 assign(closeBtn, {innerText: '×', className: 'toast-close'})
-assign(closeBtn.style, {top: 'var(--offset)', right: 'var(--offset)'})
+assign(closeBtn.style, {left: 'unset', bottom: 'unset'})
