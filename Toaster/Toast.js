@@ -28,13 +28,66 @@ export default class Toast {
       zIndex: zIndex++
     })
 
-    const closer = closeBtn.cloneNode(true)
-    closer.onclick = e => e.shiftKey ? this.toaster.clear() : this.remove()
-    this.el.append(closer)
+    this.prepareEventHandlers()
 
     this.toaster.el.append(this.el)
 
     this.timer = setTimeout(() => this.remove(), this.life*1000)
+  }
+
+  prepareEventHandlers() {
+    const closer = closeBtn.cloneNode(true)
+    closer.onclick = e => e.shiftKey ? this.toaster.clear() : this.remove()
+    this.el.append(closer)
+
+    let offsetX, offsetY
+
+    const glass = this.toaster.el
+
+    const handleMove = e => {
+      if ((e.buttons & 1) !== 1) return handleStop()
+
+      const left = e.clientX - offsetX + 'px'
+      const top = e.clientY - offsetY + 'px'
+
+      if (!this.placed) {
+        clearTimeout(this.timer)
+        this.placed = true
+        this.el.classList.add('placed')
+
+        this.toaster.updateShifts()
+
+        const {width, height} = this.el.getBoundingClientRect()
+        assign(this.el.style,
+          {width: width+'px', height: height+'px', maxWidth: 'unset'},
+          {left: null, right: null, top: null, bottom: null, transform: null})
+      }
+
+      assign(this.el.style, {top, left})
+    }
+
+    const handleStop = () => {
+      glass.style.pointerEvents = null
+      glass.removeEventListener('mousemove', handleMove)
+      glass.removeEventListener('mouseup', handleStop)
+      this.el.style.transition = null
+
+    }
+
+    this.el.onmousedown = e => {
+      this.el.style.transition = 'none'
+      assign(this.el.style, {transition: 'none', zIndex: zIndex++})
+      this.toaster.rise()
+
+      const {x, y} = this.el.getBoundingClientRect()
+      const {clientX, clientY} = e
+      offsetX = clientX - x
+      offsetY = clientY - y
+
+      glass.style.pointerEvents = 'all'
+      glass.addEventListener('mousemove', handleMove)
+      glass.addEventListener('mouseup', handleStop)
+    }
   }
 
   remove() {
@@ -45,6 +98,8 @@ export default class Toast {
     toasts.splice(toasts.indexOf(this), 1)
     this.toaster.updateShifts()
   }
+
+
 
   updateClosePos() {}
 }

@@ -21,8 +21,11 @@ export default class Toaster {
   }
 
   log(msgContent, additionalClass, life) {
-    while (this.toasts.filter(toast => !toast.placed).length >= this.limit)
-      this.toasts[0].remove()
+    const mortals = this.toasts.filter(toast => !toast.placed)
+    if (mortals.length >= this.limit) {
+      mortals.slice(0, mortals.length - this.limit + 1)
+        .forEach(toast => toast.remove())
+    }
 
     if (life === undefined) life = this.life
 
@@ -66,11 +69,15 @@ export default class Toaster {
                     side.includes('center')? '-50%' : '0'
     const toY = to=='top'? '-100vh' : to=='bottom'? '100vh' : '0'
 
+    const placedToX = to=='left'? '-100vw' : to=='right'? '100vw' : '0'
+    const placedToY = to=='top'? '-100vh' : to=='bottom'? '100vh' : '0'
+
     this.el.style = `
       zIndex: ${zIndex++};
       --width: ${this.width}%;
       --translate-in: translate(${fromX}, ${fromY});
       --translate-out: translate(${toX}, ${toY});
+      --placed-translate-out: translate(${placedToX}, ${placedToY});
     `
     document.body.append(this.el)
   }
@@ -98,6 +105,10 @@ export default class Toaster {
 
     toasts.forEach(toast =>
       toast.el.style.setProperty('--shift', toast.shift+'px'))
+  }
+
+  rise() {
+    this.el.style.zIndex = zIndex++
   }
 }
 

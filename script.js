@@ -25,7 +25,7 @@ const toaster2 = new Toaster({
   // to: 'right',
   life: 10,
   limit: 3,
-  width: 20,
+  width: 30,
   gap: 1,
   // push: false,
 })
@@ -41,7 +41,7 @@ const toaster3 = new Toaster({
   // to: 'right',
   life: 9,
   limit: 9,
-  width: 15,
+  width: 20,
   gap: 1,
   // push: false,
 })
@@ -50,7 +50,7 @@ const timer3 = setInterval(() => toaster3.log(lorem.paragraph(1, 10)), 600)
 
 setTimeout(clearInterval, 10000, timer3)
 
-setTimeout(() => toaster3.clear(), 6000)
+// setTimeout(() => toaster3.clear(), 6000)
 
 
 window.Toaster = Toaster

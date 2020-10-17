@@ -19,12 +19,17 @@ style.innerHTML = /* css */ `
     padding: 7px 18px;
     transition: .5s;
     max-width: var(--width);
+    box-sizing: border-box;
     animation: fly-in .5s ease-out;
     --offset: 5px;
   }
 
   .fleeing {
     animation: fly-out .8s ease-in;
+  }
+
+  .placed.fleeing {
+    animation: placed-fly-out .8s ease-in;
   }
 
   .toast-close {
@@ -51,6 +56,10 @@ style.innerHTML = /* css */ `
 
   @keyframes fly-out {
     to { transform: var(--translate-out) }
+  }
+
+  @keyframes placed-fly-out {
+    to { transform: var(--placed-translate-out) }
   }
 `
 
